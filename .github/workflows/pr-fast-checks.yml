@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/pr-fast-checks.yml"
       - ".github/scripts/run_pr_fast_checks.py"
+      - ".github/actions/**"
       - ".pre-commit-config.yaml"
       - "pyproject.toml"
       - "uv.lock"
@@ -48,15 +49,10 @@ jobs:
             "https://github.com/${PR_HEAD_REPO}.git" \
             "${PR_HEAD_REF}"
           test "$(git rev-parse FETCH_HEAD)" = "${PR_HEAD_SHA}"
-
-      - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v7
+      - uses: ./.github/actions/setup-ubuntu-ci
         with:
-          python-version: "3.12"
-          enable-cache: true
-
-      - name: Install minimal trusted lint and typing dependencies
-        run: uv sync --frozen --only-group pr-fast-checks --no-install-project
+          python_version: "3.12"
+          uv_sync_args: --frozen --only-group pr-fast-checks --no-install-project
 
       - name: Run fast lint and typing checks
         run: |
