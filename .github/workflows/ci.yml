@@ -34,8 +34,6 @@ concurrency:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
-env:
   DEFAULT_PYTHON_VERSIONS: '["3.10"]'
   FULL_PYTHON_VERSIONS: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
 
